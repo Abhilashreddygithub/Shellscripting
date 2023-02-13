@@ -1,0 +1,9 @@
+#!/usr/bin/ksh
+DOF=`date +"%d%m%y"`
+export ORACLE_SID=DRSMS1
+export ORACLE_HOME=/oracle/app/oracle/product/12.2.0/dbhome_1
+export PATH=$PATH:$ORACLE_HOME/bin
+rman target / msglog /home/oracle/rman_scripts/archivelog/rman_arch_bkp_DRSMS_$DOF.log cmdfile=/home/oracle/rman_scripts/archivelog/rman_archive_TAPE_DRSMS.cmd
+echo "-----------------------------------------------------------------------------------------" >>/home/oracle/rman_scripts/archivelog/rman_arch_bkp_DRSMS_$DOF.log
+echo "\n" >>/home/oracle/rman_scripts/archivelog/rman_arch_bkp_DRSMS_$DOF.log
+cat /home/oracle/rman_scripts/archivelog/rman_arch_bkp_DRSMS_$DOF.log | mailx -r wipro@kvbmail.com -v -s "DRSMS Arch_Backup$DOF" wiprodcdr@kvbmail.com
